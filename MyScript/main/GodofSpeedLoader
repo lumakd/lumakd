@@ -5,7 +5,7 @@
  |    |___|  |  // __ \_/    |    \ \_\ \  | |  |  /\___ \\  \___ / __ \|  | (  <_> )  | \/
  |_______ \____/(____  /\_______  /___  /__| |____//____  >\___  >____  /__|  \____/|__|   
          \/          \/         \/    \/                \/     \/     \/                   
-          \_Welcome to MyScript   (Alpha 1.0.0) ~  Much Love, Lumakd 
+          \_Welcome to Huge Hub   (Vesion 1.0.0) ~  Much Love, Lumakd 
 
 ]]--
 
@@ -19,14 +19,14 @@ notification.SoundId = "rbxassetid://9086208751"
 notification.Volume = 10
 
 game.StarterGui:SetCore("SendNotification", {
-      Icon = "http://www.roblox.com/asset/?id=12523036534";
-      Title = "God of Speed Hub", 
-      Text = "Loaded Complete";
+      Icon = "http://www.roblox.com/asset/?id=15418329896";
+      Title = "Huge Hub", 
+      Text = "Loading..Script";
 })
 wait(2)
 game.StarterGui:SetCore("SendNotification", {
-      Icon = "http://www.roblox.com/asset/?id=12523036534";
-      Title = "God of Speed Hub", 
+      Icon = "http://www.roblox.com/asset/?id=15418329896";
+      Title = "Huge Hub", 
       Text = "Loaded..Complete";
 notification:Play()
 })
