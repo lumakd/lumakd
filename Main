@@ -1,0 +1,19 @@
+--Notfication-Sound  
+local notification = Instance.new("Sound")
+notification.Parent = game:GetService("SoundService")
+notification.SoundId = "rbxassetid://9086208751"
+notification.Volume = 10
+
+game.StarterGui:SetCore("SendNotification", {
+      Icon = "http://www.roblox.com/asset/?id=13486422974";
+      Title = "Huge Hub", 
+      Text = "Loading..Script";
+})
+wait(2)
+game.StarterGui:SetCore("SendNotification", {
+      Icon = "http://www.roblox.com/asset/?id=13486422974";
+      Title = "Huge Hub", 
+      Text = "Loaded..Complete";
+notification:Play()
+})
+loadstring(Game:HttpGetAsync("https://raw.githubusercontent.com/WingHub0009z/WingHub/main/WingMain"))()
