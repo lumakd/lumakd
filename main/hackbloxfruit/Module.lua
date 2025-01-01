@@ -3,9 +3,6 @@ local Settings = ...
 if type(Settings) ~= "table" then
   return nil
 end
-
-local _ENV = (getgenv or getrenv or getfenv)()
-
 local function WaitChilds(path, ...)
   local last = path
   for _, Name in {...} do
@@ -47,11 +44,11 @@ local sethiddenproperty = sethiddenproperty or (function(...) return ... end)
 local setupvalue = setupvalue or (debug and debug.setupvalue)
 local getupvalue = getupvalue or (debug and debug.getupvalue)
 
-local BRING_TAG = _ENV._Bring_Tag or (math.random(80, 140) .. "_Bring")
-local KILLAURA_TAG = _ENV._KillAura_Tag or (math.random(120, 200) .. "_Kill")
+local BRING_TAG = getgenv()._Bring_Tag or (math.random(80, 140) .. "_Bring")
+local KILLAURA_TAG = getgenv()._KillAura_Tag or (math.random(120, 200) .. "_Kill")
 
-_ENV._Bring_Tag = BRING_TAG
-_ENV._KillAura_Tag = KILLAURA_TAG
+getgenv()._Bring_Tag = BRING_TAG
+getgenv()._KillAura_Tag = KILLAURA_TAG
 
 local function GetEnemyName(string)
   return (string:find("Lv. ") and string:gsub(" %pLv. %d+%p", "") or string):gsub(" %pBoss%p", "")
@@ -1078,14 +1075,14 @@ local Module = {} do
   end)
   
   Module.Hooking = (function()
-    if _ENV.rz_AimBot then
-      return _ENV.rz_AimBot
+    if getgenv().rz_AimBot then
+      return getgenv().rz_AimBot
     end
     
     local module = {}
-    _ENV.rz_AimBot = module
+    .rz_AimBot = module
     
-    local Enabled = _ENV.rz_EnabledOptions;
+    local Enabled = getgenv().rz_EnabledOptions;
     local IsAlive = Module.IsAlive;
     
     local NextEnemy = nil;
@@ -1106,7 +1103,7 @@ local Module = {} do
         return NextEnemy
       end
       
-      if (Mode and _ENV[Mode]) then
+      if (Mode and getgenv()[Mode]) then
         return NextTarget
       end
     end
@@ -1156,16 +1153,16 @@ local Module = {} do
     end
     
     function module:SpeedBypass()
-      if _ENV._Enabled_Speed_Bypass then
+      if getgenv()._Enabled_Speed_Bypass then
         return nil
       end
       
-      _ENV._Enabled_Speed_Bypass = true
+      getgenv()._Enabled_Speed_Bypass = true
       
       local oldHook;
       oldHook = hookmetamethod(Player, "__newindex", function(self, index, value)
         if self.Name == "Humanoid" and index == "WalkSpeed" then
-          return oldHook(self, index, _ENV.WalkSpeedBypass or value)
+          return oldHook(self, index, getgenv().WalkSpeedBypass or value)
         end
         return oldHook(self, index, value)
       end)
@@ -1177,7 +1174,7 @@ local Module = {} do
     
     Stepped:Connect(UpdateTarget)
     
-    local old_namecall; old_namecall = _ENV.original_namecall or hookmetamethod(game, "__namecall", function(self, ...)
+    local old_namecall; old_namecall = getgenv().original_namecall or hookmetamethod(game, "__namecall", function(self, ...)
       local Method = string.lower(getnamecallmethod())
       
       if Method ~= "fireserver" then
@@ -1227,8 +1224,8 @@ local Module = {} do
   end)()
   
   Module.FastAttack = (function()
-    if _ENV.rz_FastAttack then
-      return _ENV.rz_FastAttack
+    if getgenv().rz_FastAttack then
+      return getgenv().rz_FastAttack
     end
     
     local FastAttack = {
@@ -1237,7 +1234,7 @@ local Module = {} do
       attackPlayers = true,
       Equipped = nil
     }
-    _ENV.rz_FastAttack = FastAttack
+    getgenv().rz_FastAttack = FastAttack
     
     local RegisterAttack = Net:WaitForChild("RE/RegisterAttack")
     local ShootGunEvent = Net:WaitForChild("RE/ShootGunEvent")
@@ -1314,8 +1311,8 @@ local Module = {} do
   end)()
   
   Module.Tween = (function()
-    if _ENV.TweenVelocity then
-      return _ENV.TweenVelocity
+    if getgenv().TweenVelocity then
+      return getgenv().TweenVelocity
     end
     
     local IsAlive = Module.IsAlive
@@ -1324,12 +1321,12 @@ local Module = {} do
     Velocity.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
     Velocity.Velocity = Vector3.zero
     
-    _ENV.TweenVelocity = Velocity
+    getgenv().TweenVelocity = Velocity
     
     Stepped:Connect(function()
       local Character = Player.Character
       
-      if _ENV.OnFarm and Velocity.Parent ~= nil and Character then
+      if getgenv().OnFarm and Velocity.Parent ~= nil and Character then
         for _, Part in Character:GetDescendants() do
           if Part:IsA("BasePart") and Part.CanCollide then
             Part.CanCollide = false
@@ -1342,11 +1339,11 @@ local Module = {} do
       local Character = Player.Character
       local isAlive = IsAlive(Character)
       
-      if isAlive and Velocity ~= Vector3.zero and (not Character.Humanoid.SeatPart or not _ENV.OnFarm) then
+      if isAlive and Velocity ~= Vector3.zero and (not Character.Humanoid.SeatPart or not getgenv().OnFarm) then
         Velocity.Velocity = Vector3.zero
       end
       
-      if _ENV.OnFarm and isAlive then
+      if getgenv().OnFarm and isAlive then
         if Velocity.Parent == nil then
           Velocity.Parent = Character.PrimaryPart
         end
